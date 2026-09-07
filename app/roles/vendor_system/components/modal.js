@@ -9,17 +9,22 @@ const Modal = (props) => {
     const { alerts } = useSelector(
         (state) => state.product
     );
+
     const saveProduct = async (editProduct) => {
         await dispatch(updateProduct(editProduct));
         setShowModal(false)
     }
+
     return (
         <>
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+            {/* Added p-4 to the outer container to ensure it doesn't touch the screen edges on mobile */}
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
 
-                <div className="bg-slate-800 w-[90%] max-w-lg rounded-2xl p-8 shadow-2xl">
+                {/* Added max-h-[90vh] and overflow-y-auto to allow scrolling on small devices. Tweaked padding for mobile. */}
+                <div className="bg-slate-800 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-5 sm:p-8 shadow-2xl">
 
-                    <h2 className="text-3xl font-bold text-white text-center mb-6">
+                    {/* Scaled text down slightly on mobile to prevent wrapping issues */}
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-6">
                         Edit Product
                     </h2>
 
@@ -187,28 +192,23 @@ const Modal = (props) => {
 
                     {/* Buttons */}
                     <div className="flex gap-4 mt-6">
-
                         <button
                             onClick={() => setShowModal(false)}
-                            className="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white"
+                            className="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white transition-colors"
                         >
                             Cancel
                         </button>
-
                         <button
                             onClick={() => saveProduct(editProduct)}
-                            className="flex-1 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white"
+                            className="flex-1 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white transition-colors"
                         >
                             Save Changes
                         </button>
-
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
 
 export default Modal
-
