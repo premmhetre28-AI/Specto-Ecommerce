@@ -42,7 +42,7 @@ export default function page() {
         const res = await dispatch(payment(supplier.dueAmount))
         if (res.payload.success) {
             const order = res.payload.order
-            
+
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                 amount: order.amount,
@@ -52,15 +52,15 @@ export default function page() {
                 order_id: order.id,
 
                 handler: async function (response) {
-                    const payload ={
+                    const payload = {
                         ...supplier,
-                        dueAmount:0,
-                        paymentStatus:"Paid"
+                        dueAmount: 0,
+                        paymentStatus: "Paid"
                     }
                     alert("Payment Success");
                     // update supplier payment after success
-                    dispatch(updateSupplier({id: supplier._id,payload}))
-                    
+                    dispatch(updateSupplier({ id: supplier._id, payload }))
+
                 }
 
             }
@@ -132,104 +132,117 @@ export default function page() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {displaySuppliers.map((supplier) => (
-                    <div
-                        key={supplier._id}
-                        className="relative bg-slate-800 rounded-xl p-4 
+                {displaySuppliers && displaySuppliers.length > 0 ?
+                    (
+                        
+                            displaySuppliers.map((supplier) => (
+                                <div
+                                    key={supplier._id}
+                                    className="relative bg-slate-800 rounded-xl p-4 
                                     border border-slate-700 hover:border-purple-500 
                                     transition-all duration-300"
-                    >
-                        {/* Actions */}
-                        <div className="absolute top-3 right-3 flex gap-2">
+                                >
+                                    {/* Actions */}
+                                    <div className="absolute top-3 right-3 flex gap-2">
 
-                            <button
-                                onClick={() => handleEdit(supplier)}
-                                className="p-1.5 rounded-lg bg-blue-500/10 
+                                        <button
+                                            onClick={() => handleEdit(supplier)}
+                                            className="p-1.5 rounded-lg bg-blue-500/10 
                                     hover:bg-blue-500/20 text-blue-400"
-                            >
-                                <Pencil size={15} />
-                            </button>
+                                        >
+                                            <Pencil size={15} />
+                                        </button>
 
-                            <button
-                                onClick={() => handleDelete(supplier._id)}
-                                className="p-1.5 rounded-lg bg-red-500/10 
+                                        <button
+                                            onClick={() => handleDelete(supplier._id)}
+                                            className="p-1.5 rounded-lg bg-red-500/10 
                                 hover:bg-red-500/20 text-red-400"
-                            >
-                                <Trash2 size={15} />
-                            </button>
-                        </div>
+                                        >
+                                            <Trash2 size={15} />
+                                        </button>
+                                    </div>
 
-                        {/* Product */}
-                        <div className="mb-3">
-                            <p className="text-xs text-slate-500">Product</p>
-                            <h2 className="text-base font-semibold text-white truncate">
-                                {supplier.productName}
-                            </h2>
-                        </div>
+                                    {/* Product */}
+                                    <div className="mb-3">
+                                        <p className="text-xs text-slate-500">Product</p>
+                                        <h2 className="text-base font-semibold text-white truncate">
+                                            {supplier.productName}
+                                        </h2>
+                                    </div>
 
-                        {/* Supplier */}
-                        <div className="space-y-2 mb-3 text-sm">
+                                    {/* Supplier */}
+                                    <div className="space-y-2 mb-3 text-sm">
 
-                            <p className="text-slate-300">
-                                <span className="text-slate-500">Supplier:</span> {supplier.name}
-                            </p>
+                                        <p className="text-slate-300">
+                                            <span className="text-slate-500">Supplier:</span> {supplier.name}
+                                        </p>
 
-                            <div className="flex items-center gap-2 text-slate-300">
-                                <Building2 size={14} />
-                                <span className="truncate">{supplier.company}</span>
-                            </div>
+                                        <div className="flex items-center gap-2 text-slate-300">
+                                            <Building2 size={14} />
+                                            <span className="truncate">{supplier.company}</span>
+                                        </div>
 
-                            <div className="flex items-center gap-2 text-slate-300">
-                                <Phone size={14} />
-                                <span>{supplier.phone}</span>
-                            </div>
-                        </div>
+                                        <div className="flex items-center gap-2 text-slate-300">
+                                            <Phone size={14} />
+                                            <span>{supplier.phone}</span>
+                                        </div>
+                                    </div>
 
-                        {/* Amount */}
-                        <div className="border-t border-slate-700 pt-3 mb-3 text-sm">
+                                    {/* Amount */}
+                                    <div className="border-t border-slate-700 pt-3 mb-3 text-sm">
 
-                            <div className="flex justify-between">
-                                <span className="text-slate-400">Total Amount</span>
-                                <span className="text-green-400 font-semibold">
-                                    ₹{supplier.totalAmount}
-                                </span>
-                            </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-slate-400">Total Amount</span>
+                                            <span className="text-green-400 font-semibold">
+                                                ₹{supplier.totalAmount}
+                                            </span>
+                                        </div>
 
-                            {supplier.dueAmount > 0 && (
-                                <div className="flex justify-between mt-1">
-                                    <span className="text-slate-400">Due Amount</span>
-                                    <span className="text-red-400 font-semibold">
-                                        ₹{supplier.dueAmount}
-                                    </span>
-                                </div>
-                            )}
-                        </div>
+                                        {supplier.dueAmount > 0 && (
+                                            <div className="flex justify-between mt-1">
+                                                <span className="text-slate-400">Due Amount</span>
+                                                <span className="text-red-400 font-semibold">
+                                                    ₹{supplier.dueAmount}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
 
-                        {/* Bottom */}
-                        <div className="flex items-center justify-between gap-2">
+                                    {/* Bottom */}
+                                    <div className="flex items-center justify-between gap-2">
 
-                            <span
-                                className={`px-2 py-1 rounded-lg text-xs font-medium ${getStatusStyle(
-                                    supplier.paymentStatus
-                                )}`}
-                            >
-                                {supplier.paymentStatus}
-                            </span>
+                                        <span
+                                            className={`px-2 py-1 rounded-lg text-xs font-medium ${getStatusStyle(
+                                                supplier.paymentStatus
+                                            )}`}
+                                        >
+                                            {supplier.paymentStatus}
+                                        </span>
 
-                            {supplier.dueAmount > 0 && (
-                                <button
-                                    onClick={() => handlePay(supplier)}
-                                    className="px-3 py-1.5 text-sm rounded-lg 
+                                        {supplier.dueAmount > 0 && (
+                                            <button
+                                                onClick={() => handlePay(supplier)}
+                                                className="px-3 py-1.5 text-sm rounded-lg 
                                         bg-emerald-600 hover:bg-emerald-700
                                         transition font-medium"
-                                >
-                                    💳 Pay Now
-                                </button>
-                            )}
+                                            >
+                                                💳 Pay Now
+                                            </button>
+                                        )}
 
+                                    </div>
+                                </div>
+                            ))
+                    ) : (
+                        <div className="col-span-full flex flex-col items-center justify-center py-20">
+                            <p className="text-xl font-semibold text-slate-300">
+                                No suppliers found
+                            </p>
+                            <p className="text-sm text-slate-500 mt-2">
+                                There are no supplier records available.
+                            </p>
                         </div>
-                    </div>
-                ))}
+                    )}
             </div>
             {modal &&
                 (
