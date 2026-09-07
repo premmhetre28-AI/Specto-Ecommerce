@@ -324,7 +324,12 @@ export default function Header() {
 
               <div className="flex items-center justify-between">
 
-                <UserButton user={user} />
+                <div className="flex items-center gap-3">
+                  <UserButton user={user} />
+                  <span className="text-sm font-medium text-gray-700">
+                    {user?.name || "Guest"}
+                  </span>
+                </div>
 
                 <button
                   onClick={() => setOpen(false)}
