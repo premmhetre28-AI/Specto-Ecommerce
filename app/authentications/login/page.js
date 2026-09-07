@@ -20,19 +20,19 @@ export default function LoginPage() {
     if (result.payload.success) {
       alert(result.payload.message)
       if(result.payload.user.role=="customer"){
-        router.push('/roles/customer_system')
+        router.push('/my-app/app/roles/customer_system')
       }
       else if(result.payload.user.role=="admin"){
-        router.push('/roles/admin_system/dashboard')
+        router.push('/my-app/app/roles/admin_system/dashboard')
       }
       else{
-        router.push('/roles/vendor_system')
+        router.push('/my-app/app/roles/vendor_system')
       }
       
     }
     else {
       alert(result.payload.message)
-      router.push('/authentications/login')
+      router.push('/my-app/app/authentications/login')
     }
     setForm({
       email: "",
@@ -44,13 +44,13 @@ export default function LoginPage() {
       const result = await dispatch(getUser())
       if (result.payload.success) {
         if(result.payload.user.role=="customer"){
-          router.push('/roles/customer_system')
+          router.push('/my-app/app/roles/customer_system')
         }
         else if(result.payload.user.role=="admin"){
-          router.push('/roles/admin_system/dashboard')
+          router.push('/my-app/app/roles/admin_system/dashboard')
         }
         else{
-          router.push('/roles/vendor_system')
+          router.push('/my-app/app/roles/vendor_system')
         }
       }
     }
