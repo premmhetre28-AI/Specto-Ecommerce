@@ -20,13 +20,13 @@ export default function LoginPage() {
     if (result.payload.success) {
       alert(result.payload.message)
       if(result.payload.user.role=="customer"){
-        router.push('/app/roles/customer_system')
+        router.push('/roles/customer_system')
       }
       else if(result.payload.user.role=="admin"){
-        router.push('/app/roles/admin_system/dashboard')
+        router.push('/roles/admin_system/dashboard')
       }
       else{
-        router.push('/app/roles/vendor_system')
+        router.push('/roles/vendor_system')
       }
       
     }
