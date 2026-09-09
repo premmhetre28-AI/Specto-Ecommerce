@@ -32,7 +32,7 @@ export default function LoginPage() {
     }
     else {
       alert(result.payload.message)
-      router.push('/app/authentications/login')
+      router.push('/authentications/register')
     }
     setForm({
       email: "",

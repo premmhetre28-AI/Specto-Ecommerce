@@ -30,10 +30,10 @@ const Page = () => {
                 !womenProducts || womenProducts?.length === 0 ? (
                     <div className="text-center py-20">
                         <h2 className="text-2xl font-bold text-gray-700">
-                            No Carts Available
+                            No Products Available
                         </h2>
                         <p className="text-gray-500 mt-2">
-                            Choose your favorite products and add them to your cart to see them here.
+                            Products will appear here soon.
                         </p>
                     </div>
                 ) : (
